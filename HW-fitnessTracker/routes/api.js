@@ -1,12 +1,12 @@
 const router = require("express").Router();
-const workout = require("../models/userModels.js");
+const workout = require("../models/workout.js");
 
 router.post("/api/workouts", (req, res) => {
   workout.create({})
-    .then(dbWorkout => {
+    .then((dbWorkout) => {
       res.json(dbWorkout);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(400).json(err);
     });
 });
@@ -56,14 +56,16 @@ router.put("/api/workout/:id", ({ body, params }, res) => {
   workout.findByIdAndUpdate(
     params.id,
     {
-       $push: 
-    })
-    .then(dbWorkout => {
-      res.json(dbWorkout);
-    })
-    .catch(err => {
-      res.status(400).json(err);
-    });
+      $push: {exercises:body } },
+    { 
+      new: true, runValidators: true }
+    )
+      .then(dbWorkout => {
+        res.json(dbWorkout);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
 });
 
 router.delete("/api/workouts", ({ body }, res) => {

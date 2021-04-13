@@ -1,3 +1,3 @@
 module.exports = {
-  userWorkout: require('./userModel')
+  userWorkout: require('./workout')
 };
